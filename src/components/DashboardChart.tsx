@@ -175,7 +175,30 @@ const DashboardChart = () => {
                 return value.substring(0, 5);
               }}
             />
-            <Tooltip />
+            <Tooltip
+              wrapperStyle={{
+                zIndex: 10,
+              }}
+              content={({ payload, label, active }) => {
+                if (active && payload && payload.length) {
+                  return (
+                    <div className="bg-primary-dark border-primary-light rounded-lg border p-4 shadow-lg">
+                      <p className="text-primary-light text-sm">{label}</p>
+                      {payload.map((entry, index) => (
+                        <p key={`item-${index}`} className="text-primary-light text-base">
+                          <span className="text-primary-light font-bold uppercase">
+                            {entry.name}:
+                          </span>{" "}
+                          <span className="font-bold text-white">{entry.value}</span>
+                        </p>
+                      ))}
+                    </div>
+                  );
+                }
+
+                return null;
+              }}
+            />
             <Area
               type="monotone"
               dataKey="total"
