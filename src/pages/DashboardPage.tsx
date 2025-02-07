@@ -4,11 +4,9 @@ import { useLazyGetDataQuery } from "@store/api/api.ts";
 import { useAppDispatch } from "@store/hooks.ts";
 import { setBots } from "@store/bots/slice/bots.slice.ts";
 import { setBalance } from "@store/balance/slice/balance.slice.ts";
-import { useLocation } from "react-router-dom";
 
 const DashboardPage = () => {
   const dispatch = useAppDispatch();
-  const location = useLocation();
   const [isLoading, setIsLoading] = useState(true);
   const [trigger, { data, isFetching, isError }] = useLazyGetDataQuery();
 
@@ -35,10 +33,6 @@ const DashboardPage = () => {
       setIsLoading(false);
     }
   }, [data, dispatch]);
-
-  useEffect(() => {
-    console.log("rerender");
-  }, [location]);
 
   if (isLoading || isFetching)
     return (
