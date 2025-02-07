@@ -51,7 +51,23 @@ const Bot = ({ bot, currentPeriod, currentBot }: PropsType) => {
             <path
               fillRule="evenodd"
               clipRule="evenodd"
-              d="M120 0H180V60H120V0ZM360 60H300V120H240V60H180V120H120V180H60V240H0V300V360V420H60V360V300H120V360V420H180V480H120V540H180H240V480V420H300V480V540H360H420V480H360V420H420V360V300H480V360V420H540V360V300V240H480V180H420V120H360V60ZM360 60V0H420V60H360ZM300 240H360V180H300V240ZM180 180V240H240V180H180Z"
+              d="M270 420V120H300V60H360V120H420V180H480V240H540V300V360V420H480V360V300H420V360V420H360V480H420V540H360H300V480V420H270ZM360 60H420V0H360V60ZM360 240H300V180H360V240Z"
+              fill={color}
+              filter="url(#colorFilter)"
+            />
+            <filter id="colorFilter">
+              <feColorMatrix
+                type="matrix"
+                values="1 0 0 0 0
+                        0 0.8 0 0 0
+                        0 0 0.8 0 0
+                        0 0 0 1 0"
+              />
+            </filter>
+            <path
+              fillRule="evenodd"
+              clipRule="evenodd"
+              d="M180 0H120V60H180V120H120V180H60V240H0V300V360V420H60V360V300H120V360V420H180V480H120V540H180H240V480V420H270V360V300V240V180V120H240V60H180V0ZM180 180V240H240V180H180Z"
               fill={color}
             />
           </svg>
@@ -66,7 +82,23 @@ const Bot = ({ bot, currentPeriod, currentBot }: PropsType) => {
             <path
               fillRule="evenodd"
               clipRule="evenodd"
-              d="M240 0H180V60H120V120H60V180H0V240V300V360V420H60V360H120V420H180V360H240V420H300V360H360V420H420V360H480V420H540V360V300V240V180H480V120H420V60H360V0H300V60H240V0ZM420 240H360H300V180H360H420V240ZM240 180V240H180H120V180H180H240Z"
+              d="M270 420V60H300V0H360V60H420V120H480V180H540V240V300V360V420H480V360H420V420H360V360H300V420H270ZM360 240H420V180H360H300V240H360Z"
+              fill={color}
+              filter="url(#colorFilter)"
+            />
+            <filter id="colorFilter">
+              <feColorMatrix
+                type="matrix"
+                values="1 0 0 0 0
+                        0 0.8 0 0 0
+                        0 0 0.8 0 0
+                        0 0 0 1 0"
+              />
+            </filter>
+            <path
+              fillRule="evenodd"
+              clipRule="evenodd"
+              d="M180 0H240V60H270V420H240V360H180V420H120V360H60V420H0V360V300V240V180H60V120H120V60H180V0ZM240 240V180H180H120V240H180H240Z"
               fill={color}
             />
           </svg>

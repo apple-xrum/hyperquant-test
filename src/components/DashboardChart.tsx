@@ -9,6 +9,50 @@ import {
 } from "recharts";
 import { useEffect, useRef, useState } from "react";
 import { useAppSelector } from "@store/hooks.ts";
+import { useLocation } from "react-router-dom";
+
+type DataType = {
+  date: string;
+  total: number;
+};
+
+const generateDates = (period: string) => {
+  const today = new Date();
+  const dates = [];
+  switch (period) {
+    case "24h":
+      for (let i = 0; i < 24; i++) {
+        const date = new Date(today);
+        date.setHours(today.getHours() - i);
+        dates.push(`${date.getHours()}:00`);
+      }
+      break;
+    case "7d":
+      for (let i = 0; i < 7; i++) {
+        const date = new Date(today);
+        date.setDate(today.getDate() - i);
+        dates.push(`${date.getDate()}.${date.getMonth() + 1}`);
+      }
+      break;
+    case "30d":
+      for (let i = 0; i < 30; i++) {
+        const date = new Date(today);
+        date.setDate(today.getDate() - i);
+        dates.push(`${date.getDate()}.${date.getMonth() + 1}`);
+      }
+      break;
+    case "all_time":
+      for (let i = 0; i < 100; i++) {
+        const date = new Date(today);
+        date.setDate(today.getDate() - i);
+        dates.push(`${date.getDate()}.${date.getMonth() + 1}`);
+      }
+      break;
+    default:
+      break;
+  }
+  return dates.reverse();
+};
 
 const DashboardChart = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -16,6 +60,8 @@ const DashboardChart = () => {
   const { currentPeriod } = useAppSelector((state) => state.period);
   const [value, setValue] = useState<number>(0);
   const [isPositive, setIsPositive] = useState<boolean>(true);
+  const [data, setData] = useState<DataType[]>([]);
+  const location = useLocation();
 
   useEffect(() => {
     if (!currentPeriod || !currentBot) return;
@@ -23,22 +69,30 @@ const DashboardChart = () => {
       currentBot[currentPeriod as "24h" | "7d" | "30d" | "60d" | "90d" | "all_time"];
     setValue(currentValue);
     setIsPositive(currentValue > 0);
-  }, [currentBot, currentPeriod]);
 
-  const data = Array(31)
-    .fill({})
-    .map((_, index) => {
+    const currentDate = generateDates(currentPeriod).map((date) => {
       return {
-        date: `${index + 1}.04`,
+        date,
         total: Math.random() * 1000,
       };
     });
 
+    setData(currentDate);
+  }, [currentBot, currentPeriod, location]);
+
   useEffect(() => {
     if (containerRef.current) {
       containerRef.current.scrollLeft = containerRef.current.scrollWidth;
+
+      const tooltip: HTMLDivElement | null = containerRef.current.querySelector(
+        ".recharts-tooltip-wrapper"
+      );
+
+      if (!tooltip) return;
+
+      tooltip.style.transform = "translate(0,0)";
     }
-  }, []);
+  }, [data]);
 
   return (
     <div className="relative mb-3">

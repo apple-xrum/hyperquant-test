@@ -16,4 +16,24 @@
     .inner-shadow, .hover\:inner-shadow:hover {
         box-shadow: inset 0 0 30px #283750;
     }
+    .glow {
+        position: relative;
+        overflow: hidden;
+    }
+    .glow::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 50%;
+        width: 50%;
+        height: 75%;
+        background: radial-gradient(circle, rgba(30, 52, 80, 0.5), rgba(30, 52, 80, 0));
+        filter: blur(10px);
+        transform: translateX(-50%);
+        z-index: 1;
+    }
+    .glow > * {
+        position: relative;
+        z-index: 2;
+    }
 }
