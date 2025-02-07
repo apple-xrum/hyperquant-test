@@ -7,10 +7,23 @@ import {
   Tooltip,
   XAxis,
 } from "recharts";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useAppSelector } from "@store/hooks.ts";
 
 const DashboardChart = () => {
   const containerRef = useRef<HTMLDivElement>(null);
+  const { currentBot } = useAppSelector((state) => state.bots);
+  const { currentPeriod } = useAppSelector((state) => state.period);
+  const [value, setValue] = useState<number>(0);
+  const [isPositive, setIsPositive] = useState<boolean>(true);
+
+  useEffect(() => {
+    if (!currentPeriod || !currentBot) return;
+    const currentValue =
+      currentBot[currentPeriod as "24h" | "7d" | "30d" | "60d" | "90d" | "all_time"];
+    setValue(currentValue);
+    setIsPositive(currentValue > 0);
+  }, [currentBot, currentPeriod]);
 
   const data = Array(31)
     .fill({})
@@ -20,10 +33,6 @@ const DashboardChart = () => {
         total: Math.random() * 1000,
       };
     });
-
-  const value = 32.6;
-
-  const isPositive = value > 0;
 
   useEffect(() => {
     if (containerRef.current) {
@@ -37,7 +46,7 @@ const DashboardChart = () => {
         className={`${isPositive ? "text-[#78A659]" : "text-[#D2447B]"} pointer-events-none absolute top-1/2 left-1/2 z-10 -translate-x-1/2 -translate-y-1/2 transform text-3xl`}
       >
         {isPositive ? "+" : "-"}
-        {+value}%
+        {isPositive ? value : -value}%
       </p>
       <div className="no-scrollbar overflow-x-auto" ref={containerRef}>
         <ResponsiveContainer minWidth={data.length * 80} height={200} width="100%">

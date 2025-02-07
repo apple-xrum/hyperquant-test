@@ -1,4 +1,5 @@
 import { RangeButton } from "@components/index.ts";
+import { useAppSelector } from "@store/hooks.ts";
 
 const ranges = [
   {
@@ -16,7 +17,7 @@ const ranges = [
 ];
 
 const TimeRange = () => {
-  const currentPeriod = "all_time";
+  const { currentPeriod } = useAppSelector((state) => state.period);
 
   return (
     <div className="flex items-center justify-between px-4">

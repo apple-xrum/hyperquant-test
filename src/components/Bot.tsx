@@ -1,24 +1,45 @@
 import { BotType } from "@types";
+import { useAppDispatch } from "@store/hooks.ts";
+import { setCurrentBot } from "@store/bots/slice/bots.slice.ts";
+import { useEffect, useState } from "react";
 
 type PropsType = {
   bot: BotType;
   currentPeriod: "24h" | "7d" | "30d" | "60d" | "90d" | "all_time";
-  currentBot: string;
+  currentBot: BotType;
 };
 
-const isBoss = false;
+const titlesBots = ["ATTACK", "BALANCE", "DEFENCE"];
+
+const getRandomWord = (words: string[]): string => {
+  const randomIndex = Math.floor(Math.random() * words.length);
+  return words[randomIndex];
+};
 
 const Bot = ({ bot, currentPeriod, currentBot }: PropsType) => {
-  const color = bot.name.split("_")[0];
-  const isPositive = bot[currentPeriod] > 0;
+  const dispatch = useAppDispatch();
 
-  // const isBoss = Math.random() > 0.5;
+  const [isBoss] = useState<boolean>(Math.random() > 0.5);
+  const [color] = useState<string>(bot.name.split("_")[0]);
+  const [title] = useState<string>(getRandomWord(titlesBots));
+  const [isPositive, setIsPositive] = useState<boolean>(bot[currentPeriod] > 0);
+  const [value, setValue] = useState<number>(0);
+
+  const handleChangeBot = (botName: string) => {
+    dispatch(setCurrentBot(botName));
+  };
+
+  useEffect(() => {
+    setIsPositive(bot[currentPeriod] > 0);
+    setValue(bot[currentPeriod]);
+  }, [bot, currentPeriod]);
 
   return (
     <button
-      className={`${bot.name === currentBot && "inner-shadow"} hover:inner-shadow flex aspect-square cursor-pointer flex-col items-center justify-center rounded-md bg-[#252D40] transition-all`}
+      className={`${bot.name === currentBot.name && "inner-shadow"} hover:inner-shadow flex aspect-square cursor-pointer flex-col items-center justify-center rounded-md bg-[#252D40] transition-all`}
+      onClick={() => handleChangeBot(bot.name)}
     >
-      <div className="relative aspect-square w-12">
+      <div className="relative aspect-square w-12 py-2">
         {isBoss ? (
           <svg
             width="100%"
@@ -51,9 +72,10 @@ const Bot = ({ bot, currentPeriod, currentBot }: PropsType) => {
           </svg>
         )}
       </div>
-      <p className={`${isPositive ? "text-[#78A659]" : "text-[#D2447B]"} text-lg font-bold`}>
+      <p className="text-sm font-bold text-white">{isBoss ? "MEGABOT" : title}</p>
+      <p className={`${isPositive ? "text-[#78A659]" : "text-[#D2447B]"} text-sm font-bold`}>
         {isPositive ? "+" : "-"}
-        {+bot[currentPeriod]}%
+        {isPositive ? value : -value}%
       </p>
     </button>
   );
