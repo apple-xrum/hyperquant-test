@@ -36,10 +36,10 @@ const Bot = ({ bot, currentPeriod, currentBot }: PropsType) => {
 
   return (
     <button
-      className={`${bot.name === currentBot.name && "inner-shadow"} hover:inner-shadow flex aspect-square cursor-pointer flex-col items-center justify-center rounded-md bg-[#252D40] transition-all`}
+      className={`${bot.name === currentBot.name && "inner-shadow"} hover:inner-shadow flex cursor-pointer flex-col items-center justify-center rounded-md bg-[#252D40] py-3 transition-all`}
       onClick={() => handleChangeBot(bot.name)}
     >
-      <div className="relative aspect-square w-12 py-2">
+      <div className="relative aspect-square w-10 py-2">
         {isBoss ? (
           <svg
             width="100%"
@@ -104,8 +104,8 @@ const Bot = ({ bot, currentPeriod, currentBot }: PropsType) => {
           </svg>
         )}
       </div>
-      <p className="text-sm font-bold text-white">{isBoss ? "MEGABOT" : title}</p>
-      <p className={`${isPositive ? "text-[#78A659]" : "text-[#D2447B]"} text-sm font-bold`}>
+      <p className="text-xs font-bold text-white">{isBoss ? "MEGABOT" : title}</p>
+      <p className={`${isPositive ? "text-[#78A659]" : "text-[#D2447B]"} text-xs font-bold`}>
         {isPositive ? "+" : "-"}
         {isPositive ? value : -value}%
       </p>

@@ -18,7 +18,7 @@ const Header = () => {
   };
 
   return (
-    <header className="glow flex w-full items-center justify-between px-4 py-8">
+    <header className="glow flex w-full items-center justify-between px-4 py-6">
       <button className="aspect-square w-7 cursor-pointer">
         <img src={MenuIcon} alt="Menu Icon" />
       </button>

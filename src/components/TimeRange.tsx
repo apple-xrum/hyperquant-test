@@ -21,7 +21,7 @@ const TimeRange = () => {
 
   return (
     <div className="flex items-center justify-between px-4">
-      <span className="text-primary-light text-sm font-bold">TimeRange:</span>
+      <span className="text-primary-light text-xs font-bold">TimeRange:</span>
       <div className="no-scrollbar flex w-fit items-center justify-center gap-x-2 overflow-x-auto rounded-full px-2">
         {ranges.map((range) => (
           <RangeButton

@@ -16,12 +16,12 @@ const Navbar = () => {
           <div className="relative mx-auto aspect-square w-7">
             <item.icon />
             {item.path === "/profile" && (
-              <div className="absolute -top-3 -right-3 flex aspect-square w-6 items-center justify-center rounded-full bg-amber-400 font-bold text-white">
+              <div className="absolute -top-2.5 -right-2.5 flex aspect-square w-5 items-center justify-center rounded-full bg-amber-400 text-xs font-bold text-white">
                 3
               </div>
             )}
           </div>
-          <p>{item.name}</p>
+          <p className="text-xs">{item.name}</p>
         </button>
       ))}
     </nav>

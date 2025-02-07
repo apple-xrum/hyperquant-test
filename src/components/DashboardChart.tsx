@@ -97,7 +97,7 @@ const DashboardChart = () => {
   return (
     <div className="relative mb-3">
       <p
-        className={`${isPositive ? "text-[#78A659]" : "text-[#D2447B]"} pointer-events-none absolute top-1/2 left-1/2 z-10 -translate-x-1/2 -translate-y-1/2 transform text-3xl`}
+        className={`${isPositive ? "text-[#78A659]" : "text-[#D2447B]"} pointer-events-none absolute top-[calc(50%-13px)] left-1/2 z-10 -translate-x-1/2 -translate-y-1/2 transform text-2xl`}
       >
         {isPositive ? "+" : "-"}
         {isPositive ? value : -value}%
@@ -149,7 +149,7 @@ const DashboardChart = () => {
               tickMargin={10}
               tickLine={false}
               stroke="#273246"
-              tick={{ stroke: "#546076", fontWeight: 100 }}
+              tick={{ stroke: "#546076", fontWeight: 100, fontSize: "12px" }}
             />
             <Tooltip />
             <Area type="monotone" dataKey="total" stroke="#227FDF" fill="url(#colorUv)" />
