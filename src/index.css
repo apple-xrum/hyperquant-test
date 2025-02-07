@@ -4,3 +4,16 @@
     --color-primary-dark: #1D2637;
     --color-primary-light: #546076;
 }
+
+@layer utilities {
+    .no-scrollbar::-webkit-scrollbar {
+        display: none;
+    }
+    .no-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+    .inner-shadow, .hover\:inner-shadow:hover {
+        box-shadow: inset 0 0 30px #283750;
+    }
+}
