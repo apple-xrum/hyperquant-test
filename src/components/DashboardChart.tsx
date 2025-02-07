@@ -97,7 +97,7 @@ const DashboardChart = () => {
     setTimeout(() => {
       if (tooltip) tooltip.style.visibility = "hidden";
       if (tooltip) tooltip.style.transform = "translate(0,0)";
-    }, 100);
+    }, 500);
   }, [data]);
 
   return (
@@ -159,7 +159,7 @@ const DashboardChart = () => {
             />
             <Tooltip />
             <Area
-              type="natural"
+              type="monotone"
               dataKey="total"
               stroke="#227FDF"
               fill="url(#colorUv)"
