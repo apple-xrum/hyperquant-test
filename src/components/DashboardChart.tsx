@@ -16,36 +16,49 @@ type DataType = {
   total: number;
 };
 
+const pad = (number: number) => (number < 10 ? "0" + number : number);
+
 const generateDates = (period: string) => {
   const today = new Date();
-  const dates = [];
+  const dates: string[] = [];
+
+  const insertDateHours = (step: number) => {
+    for (let j = 3; j >= 0; j--) {
+      const date = new Date(today);
+      date.setDate(today.getDate() - step);
+      date.setHours(j * 6);
+      dates.push(`${pad(date.getDate())}.${pad(date.getMonth() + 1)} ${date.getHours()}:00`);
+    }
+  };
+
+  const insertHoursMinutes = (step: number) => {
+    for (let j = 3; j >= 0; j--) {
+      const date = new Date(today);
+      date.setHours(today.getHours() - step);
+      date.setMinutes(j * 15);
+      dates.push(`${date.getHours()}:${date.getMinutes()}${j === 0 ? "0" : ""}`);
+    }
+  };
+
   switch (period) {
     case "24h":
       for (let i = 0; i < 24; i++) {
-        const date = new Date(today);
-        date.setHours(today.getHours() - i);
-        dates.push(`${date.getHours()}:00`);
+        insertHoursMinutes(i);
       }
       break;
     case "7d":
       for (let i = 0; i < 7; i++) {
-        const date = new Date(today);
-        date.setDate(today.getDate() - i);
-        dates.push(`${date.getDate()}.${date.getMonth() + 1}`);
+        insertDateHours(i);
       }
       break;
     case "30d":
       for (let i = 0; i < 30; i++) {
-        const date = new Date(today);
-        date.setDate(today.getDate() - i);
-        dates.push(`${date.getDate()}.${date.getMonth() + 1}`);
+        insertDateHours(i);
       }
       break;
     case "all_time":
       for (let i = 0; i < 100; i++) {
-        const date = new Date(today);
-        date.setDate(today.getDate() - i);
-        dates.push(`${date.getDate()}.${date.getMonth() + 1}`);
+        insertDateHours(i);
       }
       break;
     default:
@@ -73,7 +86,7 @@ const DashboardChart = () => {
     const currentDate = generateDates(currentPeriod).map((date) => {
       return {
         date,
-        total: Math.random() * 1000,
+        total: Math.floor(Math.random() * 901) + 100,
       };
     });
 
@@ -109,7 +122,7 @@ const DashboardChart = () => {
         {isPositive ? value : -value}%
       </p>
       <div className="no-scrollbar overflow-x-auto" ref={containerRef}>
-        <ResponsiveContainer minWidth={data.length * 80} height={200} width="100%">
+        <ResponsiveContainer minWidth={data.length * 20} height={200} width="100%">
           <AreaChart
             data={data}
             margin={{
@@ -134,28 +147,33 @@ const DashboardChart = () => {
               vertical={false}
             />
 
-            {data.map((element) => {
-              return (
-                <ReferenceLine
-                  key={element.date}
-                  stroke="#1F4978"
-                  strokeDasharray="3 3"
-                  segment={[
-                    { x: element.date, y: 0 },
-                    { x: element.date, y: element.total },
-                  ]}
-                />
-              );
+            {data.map((element, index) => {
+              if (index % 4 === 0) {
+                return (
+                  <ReferenceLine
+                    key={element.date}
+                    stroke="#1F4978"
+                    strokeDasharray="3 3"
+                    segment={[
+                      { x: element.date, y: 0 },
+                      { x: element.date, y: element.total },
+                    ]}
+                  />
+                );
+              }
             })}
 
             <XAxis
               dataKey="date"
-              interval={0}
+              interval={3}
               padding={{ left: 30, right: 30 }}
               tickMargin={10}
               tickLine={false}
               stroke="#273246"
               tick={{ stroke: "#546076", fontWeight: 100, fontSize: "12px" }}
+              tickFormatter={(value) => {
+                return value.substring(0, 5);
+              }}
             />
             <Tooltip />
             <Area
