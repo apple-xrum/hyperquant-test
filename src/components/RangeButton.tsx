@@ -16,7 +16,7 @@ const RangeButton = ({ name, value, currentPeriod }: PropsType) => {
 
   return (
     <button
-      className={`${currentPeriod === value ? "font-bold text-white" : "text-primary-light"} flex w-16 min-w-16 cursor-pointer items-center justify-center rounded-full border-1 py-1 text-xs text-nowrap`}
+      className={`${currentPeriod === value ? "font-bold text-white" : "text-primary-light"} flex w-16 min-w-12 cursor-pointer items-center justify-center rounded-full border-1 py-1 text-xs text-nowrap`}
       onClick={() => handleChangeRange(value)}
     >
       {name}
