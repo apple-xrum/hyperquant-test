@@ -81,17 +81,23 @@ const DashboardChart = () => {
   }, [currentBot, currentPeriod, location]);
 
   useEffect(() => {
-    if (containerRef.current) {
-      containerRef.current.scrollLeft = containerRef.current.scrollWidth;
+    if (!containerRef.current) return;
 
-      const tooltip: HTMLDivElement | null = containerRef.current.querySelector(
-        ".recharts-tooltip-wrapper"
-      );
+    containerRef.current.scrollLeft = containerRef.current.scrollWidth;
 
-      if (!tooltip) return;
+    if (!containerRef.current) return;
 
-      tooltip.style.transform = "translate(0,0)";
-    }
+    const tooltip: HTMLDivElement | null = containerRef.current.querySelector(
+      ".recharts-tooltip-wrapper"
+    );
+
+    if (tooltip) tooltip.style.visibility = "hidden";
+    if (tooltip) tooltip.style.transform = "translate(0,0)";
+
+    setTimeout(() => {
+      if (tooltip) tooltip.style.visibility = "hidden";
+      if (tooltip) tooltip.style.transform = "translate(0,0)";
+    }, 100);
   }, [data]);
 
   return (
@@ -152,7 +158,13 @@ const DashboardChart = () => {
               tick={{ stroke: "#546076", fontWeight: 100, fontSize: "12px" }}
             />
             <Tooltip />
-            <Area type="monotone" dataKey="total" stroke="#227FDF" fill="url(#colorUv)" />
+            <Area
+              type="natural"
+              dataKey="total"
+              stroke="#227FDF"
+              fill="url(#colorUv)"
+              isAnimationActive={false}
+            />
           </AreaChart>
         </ResponsiveContainer>
       </div>
