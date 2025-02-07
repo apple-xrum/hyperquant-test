@@ -97,20 +97,6 @@ const DashboardChart = () => {
     if (!containerRef.current) return;
 
     containerRef.current.scrollLeft = containerRef.current.scrollWidth;
-
-    if (!containerRef.current) return;
-
-    const tooltip: HTMLDivElement | null = containerRef.current.querySelector(
-      ".recharts-tooltip-wrapper"
-    );
-
-    if (tooltip) tooltip.style.visibility = "hidden";
-    if (tooltip) tooltip.style.transform = "translate(0,0)";
-
-    setTimeout(() => {
-      if (tooltip) tooltip.style.visibility = "hidden";
-      if (tooltip) tooltip.style.transform = "translate(0,0)";
-    }, 500);
   }, [data]);
 
   return (
@@ -179,6 +165,7 @@ const DashboardChart = () => {
               wrapperStyle={{
                 zIndex: 10,
               }}
+              isAnimationActive={false}
               content={({ payload, label, active }) => {
                 if (active && payload && payload.length) {
                   return (
